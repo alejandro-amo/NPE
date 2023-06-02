@@ -1,6 +1,3 @@
-import logging
-from urllib.parse import urljoin, urlencode
-
 from django import template
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.db import models
@@ -12,13 +9,13 @@ from django.utils import timezone
 from django.contrib.auth import get_user
 from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
-import requests
 from django.views.decorators.http import require_http_methods
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-
 from admin_api.models import Establecimiento
 from core import settings
 from .forms import NouEstablimentForm, EditaEstablimentForm
+import requests
+import logging
 
 logger = logging.getLogger(f'{settings.app_name}.{__name__}')
 
@@ -50,10 +47,8 @@ def index(request):
         models.Q(codigo_postal=None) |
         models.Q(codigo_postal='')).filter(activo=True).count()
 
-    establishments_possibly_closed = 0  # TODO: implement
     context['establishments_no_cp'] = establishments_no_cp
     context['establishments_no_coords'] = establishments_no_coords
-    context['establishments_possibly_closed'] = establishments_possibly_closed
 
     html_template = loader.get_template('home/index.html')
     return HttpResponse(html_template.render(context, request))
