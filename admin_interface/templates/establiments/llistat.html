@@ -1,0 +1,79 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Establiments {% endblock %}
+
+{% block javascript %}
+
+{%  endblock %}
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+    <div class="content">
+        {% if messages %}
+            <div class="row">
+                <div class="col-md-12">
+                    {% for message in messages %}
+                        <div class="alert alert-dismissible fade show text-darker {% if message.tags %}{{ message.tags }}{% endif %}" role="alert">
+                            {{ message }}
+                            <button type="button" style="margin-top:0" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true" class="text-darker">&times;</span>
+                            </button>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+        <div class="row">
+            <div class="col-12">
+                <div class="card ">
+                    <div class="card-header">
+                        <h3 class="card-title">Establiments{% if request.llistat %} | Llistat: {{ request.llistat }}{% endif %}{% if request.buscar %} | Cerca: {{ request.buscar }}{% endif %} ({{ amount }} resultats)</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="col-md-12">
+                            <table class="table table-sm table-striped table-hover ">
+                                <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Nom</th>
+                                    <th>Tipus</th>
+                                    <th>Adreça</th>
+                                    <th>CP</th>
+                                    <th>Municipi</th>
+                                    <th>GPS</th>
+                                </tr>
+                                </thead>
+                                {% for e in entity %}
+                                    <tr>
+                                        <td style="padding: 5px 5px;">{% if e.activo %}🟢{% else %}🔴{% endif %}</td>
+                                        <td style="padding: 5px 5px;"><a href="/establiments/detall?id={{ e.id }}"><span style="font-weight: bold">{{ e.nombre | title}}</span></a></td>
+                                        <td style="padding: 5px 5px;"><span class="small" style="max-width: 100px; max-height: 2em; overflow: hidden; word-wrap: break-word;">{{ e.tipo_establecimiento }}</span></td>
+                                        <td style="padding: 5px 5px;"><span class="small">{{ e.direccion }}</span></td>
+                                        <td style="padding: 5px 5px;"><span class="small">{{ e.codigo_postal }}</span></td>
+                                        <td style="padding: 5px 5px;"><span class="small">{{ e.poblacion }}</span></td>
+                                        <td style="padding: 5px 5px;"><span class="small" style="max-width: 100px; max-height: 2em; overflow: hidden; word-wrap: break-word;">{{ e.latitud }}, {{ e.longitud }}</span></td>
+                                    </tr>
+                                {% endfor %}
+                                <tbody>
+                                <!-- Filas de datos se generarán automáticamente -->
+                                </tbody>
+                            </table>
+
+                        </div>
+                        <!-- <div class="table-responsive"> -->
+
+                        <!-- </div> -->
+                    </div>
+                    <div class="card-footer">
+                        {% include 'includes/paginator.html' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

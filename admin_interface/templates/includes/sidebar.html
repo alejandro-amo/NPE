@@ -1,0 +1,29 @@
+
+    <div class="sidebar" data="blue">
+        <!--
+          Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red"
+      -->
+        <div class="sidebar-wrapper">
+            <ul class="nav">
+                <li><a href="javascript:void(0)" style="text-align: center; font-size: large">{{ user.first_name }} {{ user.last_name }}</a></li>
+                <li class="{% if 'index' in segment %} active {% endif %} ">
+                    <a href="/">
+                        <i class="tim-icons icon-components"></i>
+                        <p>Inici</p>
+                    </a>
+                </li>
+                <li class="{% if 'establiments' in segment %} active {% endif %}">
+                    <a href="/establiments/llistat">
+                        <i class="tim-icons icon-pin"></i>
+                        <p>Establiments</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'login' %}">
+                        <i class="tim-icons icon-button-power"></i>
+                        <p>Tancar la sessió</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>

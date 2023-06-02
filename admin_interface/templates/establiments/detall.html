@@ -1,0 +1,145 @@
+{% extends "layouts/base.html" %}
+{% load crispy_forms_tags %}
+{% load crispy_forms_filters %}
+
+{% block title %} Detall d'establiment {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <div class="content">
+        {% if messages %}
+            <div class="row">
+                <div class="col-md-12">
+                    {% for message in messages %}
+                        <div class="alert alert-dismissible fade show text-darker {% if message.tags %}{{ message.tags }}{% endif %}" role="alert">
+                            {{ message }}
+                            <button type="button" style="margin-top:0" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true" class="text-darker">&times;</span>
+                            </button>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="title" style="margin-bottom:0 !important;">Detall d'establiment</h3>
+                        <!-- <form method="POST" action="/establiments/detall/?id={{ id }}"> -->
+                        {% csrf_token %}
+                        {% crispy form %}
+                        <script>
+                            function goBackToListings() {window.location.href = "/establiments/llistat/?torna=1";}
+                            document.getElementById('button-id-btn-back').addEventListener("click", goBackToListings)
+                        </script>
+
+                        <!-- </form> -->
+                        <hr/>
+                        <span class="text-muted" style="font-size: x-small">Creat per {{ creado_por }} el {{ fecha_creacion }} <br/>
+                        Actualitzat per {{ actualizado_por }} el {{ fecha_actualizacion }}</span>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card ">
+                    <div class="card-header">
+                        <h6>Informació GPS actual</h6>
+                        {% if needsgpscoords %}
+                            <div class="alert alert-warning text-darker alert-dismissible fade show" role="alert">
+                                Aquest establiment no té coordenades GPS.<br/>
+                                No sortirà a l'App fins que no en tingui.
+                                <button type="button" style="margin-top:0" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true" class="text-darker">&times;</span>
+                                </button>
+                            </div>
+                        {% endif %}
+                        {% if needspostalcode %}
+                            <div class="alert alert-light text-darker alert-dismissible fade show" role="alert">
+                                Aquest establiment no té codi postal.
+                                <button type="button" style="margin-top:0" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true" class="text-darker">&times;</span>
+                                </button>
+                            </div>
+                        {% endif %}
+
+                    </div>
+                    <div class="card-body">
+                        <div id="map" style="height: 350px"></div>
+                        <!--suppress HtmlUnknownTarget -->
+                        <script src="{{ ASSETS_ROOT }}/js/plugins/googlemaps.js"></script>
+                        <!--suppress HtmlUnknownTarget -->
+                        <script async defer src="/googlemapsproxy/js?callback=initMap"></script>
+                    </div>
+
+                </div>
+
+                <div class="card ">
+                    <div class="card-header">
+                        <h6>Obtenció d'informació online</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="button-container col-sm-12 d-flex justify-content-center align-items-center">
+                            <button type="button" class="btn btn-secondary btn-sm btn-secondary mr-2" onclick="processGeocodeResponse(); processPlacesResponse()">Obtenir informació online</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" id="googleresponse" style="display: none">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <h6>Dades de l'adreça segons Google</h6>
+                            </div>
+                            <div class="col-md-9">
+                                <h6>Dades de l'establiment segons Google</h6>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                            <span class="small">
+                                Adreça segons Google (per verificar): <span class="badge bg-info text-white"><span id="googleresponse-fulladdress">(Sense informació)</span></span><br/>
+                                Coordenades GPS de l'adreça:<br/> <span class="badge bg-info text-white"><span id="googleresponse-gpscoords">(Sense informació)</span></span>&nbsp;<span class="badge bg-primary text-white" style="cursor: pointer" id="copygpscoords">Copia</span>
+                            </span>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <span class="small">
+                                            Nom segons Google (per verificar):<br/>
+                                            <span class="badge bg-info text-white"><span id="googleresponse-place-name">(Sense informació)</span></span><br/>
+                                            Estat operacional de l'establiment:<br/>
+                                            <span class="badge bg-info text-white"><span id="googleresponse-place-status">(Sense informació)</span></span><br/>
+                                            Telèfon de l'establiment:<br/>
+                                            <span class="badge bg-info text-white"><span id="googleresponse-place-telf">(Sense informació)</span></span>
+                                        </span>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span class="small">
+                                            Web de l'establiment:<br/>
+                                            <span class="badge bg-info text-white"><span id="googleresponse-place-web">(Sense informació)</span></span><br/>
+                                            Horaris de l'establiment:<br/>
+                                            <span class="badge bg-info text-white"><span id="googleresponse-place-schedule">(Sense informació)</span></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

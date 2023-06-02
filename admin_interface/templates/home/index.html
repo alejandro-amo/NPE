@@ -1,0 +1,296 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Dashboard {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <div class="content">
+        <div class="row">
+            <div class="col-6">
+                <div class="card bg-success">
+                    <div class="card-header ">
+                        <div class="row">
+                            <div class="col-sm-12 text-center">
+                                <h5 class="card-category font-weight-bold text-darker">Establiments actius (tots els tipus)</h5>
+                                <h2 class="card-title font-weight-bold">
+                                    <a href="http://localhost:8001/establiments/llistat/?pagina=1" class="text-darker" style="font-weight: bold">
+                                    {{establishments_alltypes_total}}
+                                    </a>
+                                </h2>
+                            </div>
+                            <div class="col-sm-6">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-6">
+                <div class="card bg-warning">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-sm-12 text-center">
+                                <h5 class="card-category text-darker font-weight-bold">Establiments desactivats</h5>
+                                <h2 class="card-title font-weight-bold">
+                                    <a href="http://localhost:8001/establiments/llistat/?pagina=1&llistat=inactius" class="text-darker" style="font-weight: bold">
+                                        {{establishments_disabled_total}}
+                                    </a>
+                                </h2>
+                            </div>
+                            <div class="col-sm-6">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                    </div>
+                </div>
+            </div>
+       </div>
+        <div class="row">
+            <div class="col-lg-4 text-center">
+                <div class="card bg-light">
+                    <div class="card-header">
+                        <h5 class="card-category text-darker font-weight-bold">Establiments generals actius</h5>
+                        <h2 class="card-title text-darker font-weight-bold"> {{establishments_type1_total}} </h2>
+                    </div>
+                    <div class="card-body">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center">
+                <div class="card bg-light">
+                    <div class="card-header">
+                        <h5 class="card-category text-darker font-weight-bold">Hospitals i centres de salut actius</h5>
+                        <h2 class="card-title text-darker font-weight-bold">{{establishments_type2_total}}</h2>
+                    </div>
+                    <div class="card-body">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center">
+                <div class="card card-chart bg-light">
+                    <div class="card-header">
+                        <h5 class="card-category text-darker font-weight-bold">Ajuntaments actius</h5>
+                        <h2 class="card-title text-darker font-weight-bold">{{establishments_type3_total}}</h2>
+                    </div>
+                    <div class="card-body">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6 col-md-12">
+                <div class="card card-tasks">
+                    <div class="card-header">
+                        <h4 class="card-title title d-inline">Qualitat de les dades</h4>
+
+                    </div>
+
+                    <div class="card-body">
+                        <div class="">
+                            <table class="table table-responsive-sm">
+                                <thead class=" text-primary">
+                                <tr>
+                                    <th>
+                                        Problema
+                                    </th>
+                                    <th>
+                                        Quantitat
+                                    </th>
+
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>
+                                        <a href="http://localhost:8001/establiments/llistat/?pagina=1&llistat=sense-cp">
+                                            <p class="title">Establiments actius sense codi postal</p>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="http://localhost:8001/establiments/llistat/?pagina=1&llistat=sense-cp">
+                                            <p class="title text-center">{{ establishments_no_cp }}</p>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="http://localhost:8001/establiments/llistat/?pagina=1&llistat=sense-gps">
+                                            <p class="title">Establiments actius sense coordenades GPS</p>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="http://localhost:8001/establiments/llistat/?pagina=1&llistat=sense-gps">
+                                            <p class="title text-center">{{ establishments_no_coords }}</p>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p class="title">(afegir idees per nous llistats)</p>
+                                    </td>
+                                    <td>
+                                        <p class="title text-center">0</p>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-12">
+                <div class="card card-tasks">
+                    <div class="card-header">
+                        <h4 class="card-title title d-inline">Últims establiments adherits</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table tablesorter " id="">
+                                <thead class=" text-primary">
+                                <tr>
+                                    <th>
+                                        Tipus
+                                    </th>
+                                    <th>
+                                        Nom
+                                    </th>
+                                    <th>
+                                        Ciutat
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>
+                                        Establiments col·laboradors
+                                    </td>
+                                    <td>
+                                        (properament)
+                                    </td>
+                                    <td>
+                                        (properament)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Hospitals i centres de salut
+                                    </td>
+                                    <td>
+                                        (properament)
+                                    </td>
+                                    <td>
+                                        (properament)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Ajuntaments
+                                    </td>
+                                    <td>
+                                        (properament)
+                                    </td>
+                                    <td>
+                                        (properament)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Establiments col·laboradors
+                                    </td>
+                                    <td>
+                                        (properament)
+                                    </td>
+                                    <td>
+                                        (properament)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Ajuntaments
+                                    </td>
+                                    <td>
+                                        (properament)
+                                    </td>
+                                    <td>
+                                        (properament)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Hospitals i centres de salut
+                                    </td>
+                                    <td>
+                                        (properament)
+                                    </td>
+                                    <td>
+                                        (properament)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        (properament)
+                                    </td>
+                                    <td>
+                                        (properament)
+                                    </td>
+                                    <td>
+                                        (properament)
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="card bg-transparent">
+                    <div class="card-header">
+                        <h6 class="title d-inline">Sobre les coordenades GPS i els codis postals</h6>
+
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>És normal que els establiments enregistrats durant l'última hora no tinguin encara les coordenades GPS o el codi postal calculats.</li>
+                            <li>El sistema tractarà d'obtenir-los cada hora a partir del servei OpenStreetMaps (gratuït) i, si aquest no ho aconsegueix, ho intentarà amb el servei de Google Places (de pagament).</li>
+                            <li>Si surten establiments antics als llistats d'establiments sense coordenades o d'establiments sense codi postal, és possible que s'hagi de fer una revisió de les dades introduïdes (potser l'adreça és incorrecta) i, en el pitjor dels casos, procedir a una recerca a Google Maps i una posterior edició manual de la informació.</li>
+                            <li>Mentre els establiments sense codi postal es poden mostrar a l'App mòbil dels usuaris sense problemes, els establiments sense coordenades GPS no apareixeran fins que no en tinguin.</li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+<script>
+    $(document).ready(function () {
+        // Javascript method's body can be found in assets/js/demos.js
+        // demo.initDashboardPageCharts();
+
+    });
+</script>
+
+{% endblock javascripts %}

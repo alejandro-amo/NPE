@@ -1,0 +1,106 @@
+{% extends "layouts/base.html" %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+
+{% block title %} User Profile {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+    <div class="content">
+    {% if messages %}
+    <div class="row">
+        <div class="col-md-12">
+            {% for message in messages %}
+            <div class="alert alert-dismissible fade show text-darker {% if message.tags %}{{ message.tags }}{% endif %}" role="alert">
+                {{ message }}
+                <button type="button" style="margin-top:0" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true" class="text-darker">&times;</span>
+                </button>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Afegir establiment</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12 col-md-10 offset-md-1">
+                            <form method="POST" action="/establiments/afegir/">
+                                {% csrf_token %}
+                                {{ form|crispy }}
+                                <div class="d-flex justify-content-center">
+                                    <input type="reset" class="btn btn-secondary" value="Cancel·lar" style="margin-right: 4em"/>
+                                    <input type="submit" class="btn btn-primary" value="Afegir"/>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer bg-light ">
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card bg-white text-darker">
+                <div class="card-body">
+
+                    <h6>¹Adreça</h6>
+                    <span style="font-size: x-small">Per reduïr els errors de detecció de codis postals i coordenades GPS, es prega:</span>
+                    <ul>
+                        <li>
+                            <span style="font-size: x-small">Separar bé els components de l'adreça:<br/> <span class="badge badge-sm badge-light">&nbsp;M.Josep&nbsp;</span> està malament, <span class="badge badge-sm badge-light">&nbsp;M. Josep&nbsp;</span> (espaiat) es correcte, <span class="badge badge-sm badge-light">&nbsp;Maria Josep&nbsp;</span> es millor.</span>
+                        </li>
+                        <li>
+                            <span style="font-size: x-small">Evitar afegir informació redundant o no basada en carrer i número:<br/><span class="badge badge-sm badge-light">&nbsp;edifici&nbsp;Casasayas&nbsp;</span>&nbsp;<span class="badge badge-sm badge-light">&nbsp;urbanització La Llacuna&nbsp;</span>&nbsp;<span class="badge badge-sm badge-light">&nbsp;apartaments Cye&nbsp;</span> etc. <br/>Encara que sembli que aporta valor, en realitat dificulta la determinació de les coordenades GPS.</span>
+                        </li>
+
+                    </ul>
+
+                        <hr>
+                        <h6>²Codi postal</h6>
+                        <span style="font-size: x-small">
+                        El codi postal es pot ometre en el moment de l'afegiment. Si es deixa buit, el sistema tractarà d'obtenir-lo a partir de l'adreça i la població (com fa amb les coordenades GPS), mitjançant diversos serveis de geolocalització d'adreçes.<br/>
+                            Quan el sistema no aconsegueix esbrinar el codi postal o les coordenades GPS d'un establiment, ho reportarà com un problema de qualitat de les dades que s'haurà de corregir manualment.
+
+                        </span>
+                        <hr>
+                        <h6>³Municipi</h6>
+                        <span style="font-size: x-small">
+                            El municipi no s'ha de confondre amb el nucli urbà: a Catalunya, els nuclis urbans son part integrant dels municipis.<br/> El municipi és l'autoritat administrativa que governa el territori local des de l'ajuntament.<br/>
+                        NoPucEsperar és un projecte orientat a la interacció amb els ajuntaments. És per aixó que ens interessa documentar el municipi en comptes del nucli urbà, però és habitual que els col·laboradors del projecte enviïn formularis d'adhesió amb el nucli urbà en comptes del municipi.<br/>
+                            Es pot fer servir <a href="https://icgc-portal.maps.arcgis.com/apps/webappviewer/index.html?id=2e86bfc12b17492dad96a186329ce92a&locale=CA-Es" target="_blank">aquest enllaç</a> per trobar els municipis als quals corresponen els nuclis urbans.
+                        </span>
+                        <hr>
+                        <h6>⁴Telèfons</h6>
+                        <span style="font-size: x-small">
+                        Aquesta informació serà presentada de forma directa als usuaris de l'App per poder-la seleccionar, copiar i pegar a fí de poder trucar a l'establiment si escau. Per tant, es prega un esforç d'estandardització: <br/>
+                        </span>
+                            <ul>
+                                <li><span style="font-size: x-small">No fer servir espais dintre d'un mateix número</span></li>
+                                <li><span style="font-size: x-small">No afegir <span class="badge badge-light badge-sm">+34</span> als números espanyols perquè és redundant</span></li>
+                                <li><span style="font-size: x-small">Si es posen dos telèfons, afegir-los d'aquesta manera: <br/><span class="badge badge-light badge-sm">613010203 / 650102030</span></span></li>
+                                <li><span style="font-size: x-small">Si cal extensió, posar-la d'aquesta manera: <br/><span class="badge badge-light badge-sm">937201010 (ext. 123)</span></span></li>
+                        </ul>
+
+
+
+                </div>
+                <div class="card-footer bg-light ">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
