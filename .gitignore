@@ -22,3 +22,13 @@ fuzzy_matching.txt
 /admin_interface/static/assets/node_modules/
 /.env
 __pycache__/
+/.idea/.gitignore
+/.idea/csv-editor.xml
+/.idea/dataSources.xml
+/.idea/misc.xml
+/.idea/NPE.iml
+/.idea/inspectionProfiles/profiles_settings.xml
+/.idea/inspectionProfiles/Project_Default.xml
+/.idea/sqldialects.xml
+/.idea/vcs.xml
+/.idea/watcherTasks.xml
