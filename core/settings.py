@@ -28,6 +28,7 @@ valor de longitud más a la izq en cataluña = 0.158
 valor de longitud más a la der en cataluña = 3.327
 definición de rectángulos para Google places = rectangle:south,west|north,east
 '''
+os.chdir(BASE_DIR)
 
 # Logging init - Logger
 logger = logging.getLogger(app_name)
@@ -41,7 +42,9 @@ formatter = logging.Formatter('%(asctime)s [%(name)s] [%(levelname)s] %(message)
 console_handler.setFormatter(formatter)
 logger.addHandler(console_handler)
 # Config loading
-logger.info("Loading settings...")
+logger.info(f"Loading settings. Searching for .env...")
+
+
 if Path(".env").is_file():
     logger.info("Environment file found. Loading settings from there.")
     load_dotenv()
@@ -80,7 +83,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Assets Management
 ASSETS_ROOT = os.getenv('ASSETS_ROOT', '/static/assets')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
@@ -113,9 +116,6 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     "https://admin.nopucesperar.org",
-    "http://localhost:8001",
-    "http://127.0.0.1:8001",
-    "https://maps.googleapis.com"
 ]
 
 ROOT_URLCONF = 'core.urls'
