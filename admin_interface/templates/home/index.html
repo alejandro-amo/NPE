@@ -14,7 +14,7 @@
                     <div class="card-header ">
                         <div class="row">
                             <div class="col-sm-12 text-center">
-                                <h5 class="card-category font-weight-bold text-darker">Establiments actius (tots els tipus)</h5>
+                                <h5 class="card-category font-weight-bold text-darker">Establiments actius de tots els tipus</h5>
                                 <h2 class="card-title font-weight-bold">
                                     <a href="/establiments/llistat/?pagina=1" class="text-darker" style="font-weight: bold">
                                     {{establishments_alltypes_total}}
@@ -60,7 +60,7 @@
                     <div class="card-header">
                         <h5 class="card-category text-darker font-weight-bold">Establiments generals actius</h5>
                         <h2 class="card-title text-darker font-weight-bold">
-                            <a href="/establiments/llistat/?pagina=1" class="text-darker" style="font-weight: bold">
+                            <a href="/establiments/llistat/?pagina=1&llistat=general" class="text-darker" style="font-weight: bold">
                                 {{establishments_type1_total}}
                             </a>
                         </h2>
@@ -74,7 +74,7 @@
                     <div class="card-header">
                         <h5 class="card-category text-darker font-weight-bold">Hospitals i centres de salut actius</h5>
                         <h2 class="card-title text-darker font-weight-bold">
-                            <a href="/establiments/llistat/?pagina=1&llistat=hospitals-centres-salut" class="text-darker" style="font-weight: bold">
+                            <a href="/establiments/llistat/?pagina=1&llistat=salut" class="text-darker" style="font-weight: bold">
                                 {{establishments_type2_total}}
                             </a>
                         </h2>
@@ -276,9 +276,7 @@
                     </div>
                     <div class="card-body">
                         <ul>
-                            <li>És normal que els establiments enregistrats durant l'última hora no tinguin encara les coordenades GPS o el codi postal calculats.</li>
-                            <li>El sistema tractarà d'obtenir-los cada hora a partir del servei OpenStreetMaps (gratuït) i, si aquest no ho aconsegueix, ho intentarà amb el servei de Google Places (de pagament).</li>
-                            <li>Si surten establiments antics als llistats d'establiments sense coordenades o d'establiments sense codi postal, és possible que s'hagi de fer una revisió de les dades introduïdes (potser l'adreça és incorrecta) i, en el pitjor dels casos, procedir a una recerca a Google Maps i una posterior edició manual de la informació.</li>
+                            <li>Si surten establiments antics al llistat "Establiments actius sense coordenades GPS" o al llistat "Establiments actius sense codi postal", vol dir que s'ha d'obtenir la informació mancant mitjançant el botó "Obtenció d'informació online" i actualitzar la fitxa de l'establiment amb la informació obtinguda que es mostrarà en pantalla.</li>
                             <li>Mentre els establiments sense codi postal es poden mostrar a l'App mòbil dels usuaris sense problemes, els establiments sense coordenades GPS no apareixeran fins que no en tinguin.</li>
                         </ul>
 
