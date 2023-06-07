@@ -128,13 +128,15 @@ def llistat_establiments(request):
                                                    ).order_by('-id')
         elif llistat == 'inactius':
             establiments = Establecimiento.objects.filter(activo=False).order_by('-id')
+        elif llistat == 'establiments-generals':
+            establiments = Establecimiento.objects.filter(tipo_establecimiento_id=1).order_by('-id')
         elif llistat == 'ajuntaments':
             establiments = Establecimiento.objects.filter(tipo_establecimiento_id=3).order_by('-id')
         elif llistat == 'hospitals-centres-salut':
             establiments = Establecimiento.objects.filter(tipo_establecimiento_id=2).order_by('-id')
         else:
             messages.add_message(request, messages.WARNING, 'S\'ha demanat un llistat especial que no existeix. '
-                                                            'Es mostra un llistat general.')
+                                                            'Es mostra un llistat de tots els establiments.')
             establiments = initial_queryset.order_by('-id')
     else:
         buscar = requestparams.get('buscar')
