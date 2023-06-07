@@ -46,7 +46,22 @@ def index(request):
         models.Q(codigo_postal=0) |
         models.Q(codigo_postal=None) |
         models.Q(codigo_postal='')).filter(activo=True).count()
-
+    # recent changes (additions or editions)
+    e_all = Establecimiento.objects.all()
+    e_dates = []
+    for e in e_all:
+        latest_e_date = e.fecha_actualizacion if e.fecha_actualizacion else e.fecha_creacion
+        e_dates.append({'id': e.id, 'date': latest_e_date})
+        # Sort the e_dates list by the 'date' key in descending order (most recent dates first)
+        sorted_e_dates = sorted(e_dates, key=lambda x: x['date'], reverse=True)
+        # Retrieve the first 10 elements
+        first_elements = sorted_e_dates[:5]
+        # retrieve the 10 elements in e_all that match the ids in sorted_e_dates
+    # noinspection PyUnboundLocalVariable
+    establishments_latest_changes = [e for e in e_all if e.id in [element['id'] for element in first_elements]]
+    logger.debug(f'latest changes in establishments: {establishments_latest_changes}')
+    context['establishments_all'] = e_all
+    context['establishments_latest_changes'] = establishments_latest_changes
     context['establishments_no_cp'] = establishments_no_cp
     context['establishments_no_coords'] = establishments_no_coords
 
