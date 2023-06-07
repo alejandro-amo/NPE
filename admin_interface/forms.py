@@ -40,7 +40,7 @@ class NouEstablimentForm(forms.ModelForm):
         opciones_select = [(p.nombre, p.nombre) for p in poblaciones]
         opciones_select = sorted(opciones_select, key=lambda x: unidecode(x[0]))
         # Generar la opción "sin opción" para el campo población
-        opciones_select.insert(0, ('', '(Tria població)'))
+        opciones_select.insert(0, ('', '(Tria municipi)'))
         # Carga los valores en el widget
         self.fields['poblacion'].widget = forms.Select(choices=opciones_select)
 
@@ -84,9 +84,9 @@ class EditaEstablimentForm(forms.ModelForm):
         # Carga los valores en el widget
         self.fields['poblacion'].widget = forms.Select(choices=opciones_select)
         botones = ButtonHolder(
-            Button('btn-back', '⬅️ Tornar', css_class="bg-neutral btn-sm btn-warning mr-4"),
-            Reset('reset', '🔄 Desfer', css_class='btn btn-secondary btn-sm mr-4'),
-            Submit('submit', '✅ Desar', css_class='btn btn-primary btn-sm mr-4'),
+            Button('btn-back', 'Tornar', css_class="bg-neutral btn-sm btn-warning mr-4"),
+            Reset('reset', 'Desfer', css_class='btn btn-secondary btn-sm mr-4'),
+            Submit('submit', 'Desar', css_class='btn btn-primary btn-sm mr-4'),
             css_class="d-flex justify-content-center"
         )
         # Row 1 stuff
