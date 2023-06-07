@@ -46,7 +46,7 @@ class Command(BaseCommand):
         feature_collection = FeatureCollection(lista_geojson_features)
         # store geojson data file
         geojsondata = dumps(loads(dumps(feature_collection)), indent=4, sort_keys=False)
-        outputfilename = os.path.join(settings.CORE_DIR, 'npedata.geojson')
+        outputfilename = os.path.join(settings.CORE_DIR, 'admin_api', 'data', 'npedata.geojson')
         with open(outputfilename, 'w', encoding='utf-8') as file:
             file.write(geojsondata)
         logger.info(f'GEOJSON data (re)generated and stored in {outputfilename} successfully.')

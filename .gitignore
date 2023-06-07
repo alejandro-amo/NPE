@@ -24,3 +24,4 @@ fuzzy_matching.txt
 __pycache__/
 /.idea/
 /static/
+/admin_api/data/npedata.geojson
