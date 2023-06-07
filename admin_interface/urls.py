@@ -26,6 +26,7 @@ urlpatterns = [
     re_path(r'establiments/llistat/?$', views.llistat_establiments, name='llistat_establiments'),
     re_path(r'establiments/detall/?$', views.detall_establiment, name='detall_establiment'),
     re_path(r'^googlemapsproxy/.*$', views.googlemapsproxy, name='googlemapsproxy'),
+    re_path(r'^.well-known/.*$', views.well_known, name='well-known'),
     # Establishments datatables view
     # path('detall_establiment', views.detall_establiment, name='detall_establiment'
     # LAST - Matches any html file
