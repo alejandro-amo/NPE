@@ -28,7 +28,7 @@
             <div class="col-12">
                 <div class="card ">
                     <div class="card-header">
-                        <h3 class="card-title">Establiments{% if request.llistat %} | Llistat: {{ request.llistat }}{% endif %}{% if request.buscar %} | Cerca: {{ request.buscar }}{% endif %} ({{ amount }} resultats)</h3>
+                        <h3 class="title" style="margin-bottom:0 !important;">Establiments{% if request.llistat %} | Llistat: {{ request.llistat }}{% endif %}{% if request.buscar %} | Cerca: {{ request.buscar }}{% endif %} ({{ amount }} resultats)</h3>
                     </div>
                     <div class="card-body">
                         <div class="col-md-12">
@@ -46,13 +46,13 @@
                                 </thead>
                                 {% for e in entity %}
                                     <tr>
-                                        <td style="padding: 5px 5px;">{% if e.activo %}🟢{% else %}🔴{% endif %}</td>
-                                        <td style="padding: 5px 5px;"><a href="/establiments/detall?id={{ e.id }}"><span style="font-weight: bold">{{ e.nombre | title}}</span></a></td>
-                                        <td style="padding: 5px 5px;"><span class="small" style="max-width: 100px; max-height: 2em; overflow: hidden; word-wrap: break-word;">{{ e.tipo_establecimiento }}</span></td>
-                                        <td style="padding: 5px 5px;"><span class="small">{{ e.direccion }}</span></td>
-                                        <td style="padding: 5px 5px;"><span class="small">{{ e.codigo_postal }}</span></td>
-                                        <td style="padding: 5px 5px;"><span class="small">{{ e.poblacion }}</span></td>
-                                        <td style="padding: 5px 5px;"><span class="small" style="max-width: 100px; max-height: 2em; overflow: hidden; word-wrap: break-word;">{{ e.latitud }}, {{ e.longitud }}</span></td>
+                                        <td style="min-width: 25px; padding: 5px 5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{% if e.activo %}🟢{% else %}🔴{% endif %}</td>
+                                        <td style="max-width: 400px; padding: 5px 5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"><a href="/establiments/detall?id={{ e.id }}"><span class="small" style="font-weight: bold">{{ e.nombre | title}}</span></a></td>
+                                        <td style="max-width: 90px; padding: 5px 5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"><span class="small" style="max-width: 100px; max-height: 2em; overflow: hidden; word-wrap: break-word;">{{ e.tipo_establecimiento }}</span></td>
+                                        <td style="max-width: 200px; padding: 5px 5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"><span class="small">{{ e.direccion }}</span></td>
+                                        <td style="max-width: 60px; padding: 5px 5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"><span class="small">{{ e.codigo_postal }}</span></td>
+                                        <td style="max-width: 200px; padding: 5px 5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"><span class="small">{{ e.poblacion }}</span></td>
+                                        <td style="max-width: 130px; padding: 5px 5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"><span class="small" style="min-width: 300px; max-height: 2em; overflow: hidden;">{{ e.latitud }}, {{ e.longitud }}</span></td>
                                     </tr>
                                 {% endfor %}
                                 <tbody>
