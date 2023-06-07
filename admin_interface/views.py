@@ -105,7 +105,7 @@ def llistat_establiments(request):
     # just for aesthetics and avoiding the "GET.get" thing
     requestparams = request.GET.copy()
     # Listing preservation logic
-    # torna is used as a trigger for recovery stored parameters (i.e.: when returning to listings from an item edition)
+    # torna is used as a trigger for recovering stored parameters (i.e.: when returning to listings from an item edition)
     torna = requestparams.get('torna', 0)
     last_listing_url = request.session.get('last_listing_url', None)
     if torna == "1" and last_listing_url is not None:
@@ -127,13 +127,14 @@ def llistat_establiments(request):
                                                    models.Q(longitud=None)
                                                    ).order_by('-id')
         elif llistat == 'inactius':
+            # initial queryset not adequate here - active can't be true
             establiments = Establecimiento.objects.filter(activo=False).order_by('-id')
-        elif llistat == 'establiments-generals':
-            establiments = Establecimiento.objects.filter(tipo_establecimiento_id=1).order_by('-id')
+        elif llistat == 'general':
+            establiments = initial_queryset.filter(tipo_establecimiento_id=1).order_by('-id')
         elif llistat == 'ajuntaments':
-            establiments = Establecimiento.objects.filter(tipo_establecimiento_id=3).order_by('-id')
-        elif llistat == 'hospitals-centres-salut':
-            establiments = Establecimiento.objects.filter(tipo_establecimiento_id=2).order_by('-id')
+            establiments = initial_queryset.filter(tipo_establecimiento_id=3).order_by('-id')
+        elif llistat == 'salut':
+            establiments = initial_queryset.filter(tipo_establecimiento_id=2).order_by('-id')
         else:
             messages.add_message(request, messages.WARNING, 'S\'ha demanat un llistat especial que no existeix. '
                                                             'Es mostra un llistat de tots els establiments.')
