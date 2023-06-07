@@ -79,6 +79,22 @@ def pages(request):
         return HttpResponse(html_template.render(context, request))
 
 
+def well_known(request):
+    # .well-known server for certbot and the likes
+    # noinspection PyBroadException
+    try:
+        filename = request.path.split('/')[-1]
+        # Provided all the necessary contexts for each different page
+        with open(f'well-known/{filename}', "r") as f:
+            return_contents = f.read()
+            return return_contents
+
+    except FileNotFoundError:
+        html_template = loader.get_template('home/page-404.html')
+        context = {}
+        return HttpResponse(html_template.render(context, request))
+
+
 @login_required(login_url="/login/")
 def afegir_establiment(request):
     context = {
