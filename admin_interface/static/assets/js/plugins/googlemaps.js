@@ -1,9 +1,15 @@
-// noinspection JSUnresolvedReference
+// noinspection JSUnresolvedReference,JSUnusedGlobalSymbols
 
 let map;
 let marker;
-let latitud = parseFloat(document.getElementById('id_latitud').value);
-let longitud = parseFloat(document.getElementById('id_longitud').value);
+let markers = [];
+
+let latitudElement = document.getElementById('id_latitud');
+let longitudElement = document.getElementById('id_longitud');
+
+let latitud = latitudElement ? parseFloat(latitudElement.value) : 0.0;
+let longitud = longitudElement ? parseFloat(longitudElement.value) : 0.0;
+
 const mapOptions = {
   mapId: 'ae555d8787365c53',
   center: {lat: 41.65, lng: 1.7},
@@ -18,7 +24,7 @@ const mapOptions = {
   scrollwheel: false,
 };
 
-function setMarker(lat, long) {
+function setDetailMarker(lat, long) {
   if (marker === null || marker === undefined) {
     // No existe un marcador llamado "marker" en el mapa
     marker = new google.maps.Marker({
@@ -31,10 +37,41 @@ function setMarker(lat, long) {
   }
 }
 
+function setIndexMarker(lat, long, name, markerId) {
+    let indexMarker;
+    console.log('Receiving coords in setIndexMarker: ' + parseFloat(lat) + ', ' + long.toString())
+    indexMarker = new google.maps.Marker({
+        position: {lat: parseFloat(lat), lng: parseFloat(long)},
+        title: name.toString(),
+        name: 'marker_' + markerId.toString(),
+        url: '/establiments/detall/?id=' + markerId.toString(),
+        map: map
+    });
+
+    google.maps.event.addListener(indexMarker, 'click', function() {
+        console.log('redirecting to ' + indexMarker.url)
+      window.location.href = indexMarker.url;
+    });
+
+    return indexMarker;
+}
+
 // noinspection JSUnusedGlobalSymbols
-function initMap() {
+function initDetailMap() {
   map = new google.maps.Map(document.getElementById('map'), mapOptions);
-  setMarker(latitud, longitud);
+  if (latitud != 0 && longitud != 0 ) {
+      setDetailMarker(latitud, longitud);
+    }
+
+}
+
+
+function initIndexMap() {
+    map = new google.maps.Map(document.getElementById('map'), mapOptions);
+    markers = populateIndexMarkers();
+    let algorithm = new markerClusterer.SuperClusterAlgorithm({ maxZoom: 12, radius: 100});
+    let config = { map, markers, algorithm };
+    new markerClusterer.MarkerClusterer(config);
 }
 
 
