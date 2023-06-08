@@ -104,13 +104,16 @@ def afegir_establiment(request):
         formulario = NouEstablimentForm(data=request.POST)
         if formulario.is_valid():
             nuevo_establecimiento = formulario.save()
-            context['feedback_message'] = "Establiment afegit correctament. A continuació pots editar més detalls."
-            context['id'] = nuevo_establecimiento.id
-            return render(request, 'establiments/detall.html', context)
+            messages.add_message(request, messages.SUCCESS, "Establiment afegit correctament. A continuació pots editar més detalls.")
+            created_id = nuevo_establecimiento.id
+            nuevo_establecimiento.fecha_creacion = timezone.now()
+            nuevo_establecimiento.creado_por = request.user.username
+            nuevo_establecimiento.save()
+            return redirect(f'/establiments/detall/?id={created_id}')
         else:
             context['form'] = formulario
-            context['feedback_message'] = "Dades no vàlides o incomplertes."
-            return render(request, 'establiments/afegir.html', context)
+            messages.add_message(request, messages.ERROR, "Dades no vàlides o incomplertes.")
+            return redirect('/establiments/afegir/')
     return render(request, 'establiments/afegir.html', context)
 
 
