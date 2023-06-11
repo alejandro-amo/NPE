@@ -116,6 +116,7 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     "https://admin.nopucesperar.org",
+    "https://app.nopucesperar.org",
 ]
 
 ROOT_URLCONF = 'core.urls'
