@@ -28,6 +28,8 @@ class Command(BaseCommand):
             logger.debug(f'Processing data from ID {establishment_id}...')
             latitud = float(establishment.latitud)
             longitud = float(establishment.longitud)
+            if latitud == 0 and longitud == 0:
+                continue
             nombre = establishment.nombre
             direccion = establishment.direccion
             poblacion = establishment.poblacion
