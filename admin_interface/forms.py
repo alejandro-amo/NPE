@@ -61,7 +61,7 @@ class EditaEstablimentForm(forms.ModelForm):
             'web': 'Lloc web',
             'latitud': 'GPS - Latitud',
             'longitud': 'GPS - Longitud',
-            'activo': '← Desmarca aquesta casella per indicar que l\'establiment està tancat.',
+            'activo': '← Desmarca aquesta casella per desactivar l\'establiment. No es mostrarà a l\'App',
             'observaciones': 'Observacions'
         }
 
