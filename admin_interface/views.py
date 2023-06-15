@@ -16,6 +16,7 @@ from core import settings
 from .forms import NouEstablimentForm, EditaEstablimentForm
 import requests
 import logging
+from urllib.parse import unquote
 
 logger = logging.getLogger(f'{settings.app_name}.{__name__}')
 
@@ -158,7 +159,7 @@ def llistat_establiments(request):
                                                             'Es mostra un llistat de tots els establiments.')
             establiments = initial_queryset.order_by('-id')
     else:
-        buscar = requestparams.get('buscar')
+        buscar = unquote(requestparams.get('buscar'))
         if buscar:
             establiments = initial_queryset.filter(models.Q(nombre__icontains=buscar) |
                                                    models.Q(direccion__icontains=buscar) |
