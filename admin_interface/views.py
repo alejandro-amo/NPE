@@ -161,6 +161,7 @@ def llistat_establiments(request):
     else:
         buscar = unquote(requestparams.get('buscar'))
         if buscar:
+            logger.debug(f'Executing a search: {buscar}')
             establiments = initial_queryset.filter(models.Q(nombre__icontains=buscar) |
                                                    models.Q(direccion__icontains=buscar) |
                                                    models.Q(codigo_postal__icontains=buscar) |
