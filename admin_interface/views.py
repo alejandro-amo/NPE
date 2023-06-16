@@ -159,8 +159,9 @@ def llistat_establiments(request):
                                                             'Es mostra un llistat de tots els establiments.')
             establiments = initial_queryset.order_by('-id')
     else:
-        buscar = unquote(requestparams.get('buscar'))
+        buscar = requestparams.get('buscar')
         if buscar:
+            buscar = unquote(buscar)
             logger.debug(f'Executing a search: {buscar}')
             establiments = initial_queryset.filter(models.Q(nombre__icontains=buscar) |
                                                    models.Q(direccion__icontains=buscar) |
