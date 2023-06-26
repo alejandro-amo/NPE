@@ -15,5 +15,5 @@ NoPucEsperar Admin. Data administration dashboard, API and backend for NoPucEspe
 ![image](https://github.com/alejandro-amo/NPE/assets/1114811/7ffe2aa2-a9d3-4a46-a21e-ced46ba8c329)
 
 ### RESTful API for interoperability with other management tools or integration with other applications in the future
-See api_rest.md for details (documented in spanish)
+See [api_rest.md](https://github.com/alejandro-amo/NPE/blob/master/api_rest.md) for details (documented in spanish)
 
