@@ -17,3 +17,6 @@ NoPucEsperar Admin. Data administration dashboard, API and backend for NoPucEspe
 ### RESTful API for interoperability with other management tools or integration with other applications in the future
 Implemented in Django REST Framework. See [api_rest.md](https://github.com/alejandro-amo/NPE/blob/master/api_rest.md) for details (documented in spanish)
 
+### Open licensed, standards based file exported every time that a change is made.
+Establishments database is constantly exported to a GeoJSON file in an independent repository. The establishments database is licensed under Open License Data Base and it can be reused for any educative or social benefit purposes. Latest version of the GeoJSON file can be obtained by cloning the following repo: https://github.com/ACCU-Catalunya/nopucesperar-geojson   
+
