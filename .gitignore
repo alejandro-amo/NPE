@@ -4,7 +4,6 @@ fuzzy_matching.txt
 /npedata.geojson
 /core/.env
 .env
-/admin_api/data/*.xlsx
 /admin_api/gpt_data_processor.py
 /admin_interface/templates/accounts/login.html.bck
 /admin_interface/templates/home/register.html
@@ -24,4 +23,4 @@ fuzzy_matching.txt
 __pycache__/
 /.idea/
 /static/
-/admin_api/data/npedata.geojson
+/admin_api/data/
