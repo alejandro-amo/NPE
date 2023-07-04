@@ -8,6 +8,8 @@ NoPucEsperar Admin. Data administration dashboard, API and backend for NoPucEspe
 
 ### Custom listings for several criteria: text search, establishment type search, active/inactive search
 
+![cercar](https://github.com/alejandro-amo/NPE/assets/1114811/2d9a8b64-ecfd-439f-a497-b16c84b3471f)
+
 ![cerca-3](https://github.com/alejandro-amo/NPE/assets/1114811/c49c66d1-334e-452b-93e4-9390196f8fae)
 
 ### Real time data from Google: operational status of the stablishment, detailed address, time schedule, etc:
