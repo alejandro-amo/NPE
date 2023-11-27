@@ -25,6 +25,7 @@ urlpatterns = [
     re_path(r'establiments/afegir/?$', views.afegir_establiment, name='afegir_establiment'),
     re_path(r'establiments/llistat/?$', views.llistat_establiments, name='llistat_establiments'),
     re_path(r'establiments/detall/?$', views.detall_establiment, name='detall_establiment'),
+    re_path(r'establiments/exportar/?$', views.exportar_bdd, name='exportar_bdd'),
     re_path(r'^googlemapsproxy/.*$', views.googlemapsproxy, name='googlemapsproxy'),
     # Establishments datatables view
     # path('detall_establiment', views.detall_establiment, name='detall_establiment'

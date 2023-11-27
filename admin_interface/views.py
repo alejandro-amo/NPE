@@ -1,3 +1,4 @@
+import xlsxwriter
 from django import template
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.db import models
@@ -17,6 +18,10 @@ from .forms import NouEstablimentForm, EditaEstablimentForm
 import requests
 import logging
 from urllib.parse import unquote
+import os
+import tempfile
+import datetime
+from django.db.models import Q
 
 logger = logging.getLogger(f'{settings.app_name}.{__name__}')
 
@@ -303,3 +308,67 @@ def googlemapsproxy(request):
     '''
 
     return proxy_response
+
+@login_required(login_url="/login/")
+def exportar_bdd(request):
+    accio = request.POST.get('accio', None)
+    if accio == 'exportar-xlsx':
+        return export_bdd()
+    else:
+        context = {}  # Not using it today, maybe in future versions
+        return render(request, 'establiments/exportar.html', context)
+
+def export_bdd():
+    logger.debug('Querying database for active establishments')
+    active_establishments_queryset = Establecimiento.objects.filter(activo=True)
+    active_and_nonzerocoords_establishments_queryset = active_establishments_queryset.exclude(Q(latitud=0) |
+                                                                                              Q(longitud=0))
+    establishments_amount = active_and_nonzerocoords_establishments_queryset.count()
+    logger.info(f'XLSX file will be generated with data from {establishments_amount} establishments.')
+
+    with tempfile.TemporaryDirectory() as temp_dir:
+        # Define the filename for the XLSX output
+        current_date = datetime.datetime.now().strftime("%Y-%m-%d")
+        outputfilename = os.path.join(temp_dir, f'npe_{current_date}.xlsx')
+
+        # Create an XLSX writer object
+        workbook = xlsxwriter.Workbook(outputfilename)
+        worksheet = workbook.add_worksheet()
+
+        # Define the field names
+        fieldnames = ['id', 'tipus', 'nom', 'direcció', 'municipi', 'telefons', 'codi postal', 'latitud', 'longitud', 'web', 'email']
+
+        # Write the header
+        for col_num, fieldname in enumerate(fieldnames):
+            worksheet.write(0, col_num, fieldname)
+
+        # Write the data
+        for row_num, establishment in enumerate(active_establishments_queryset, start=1):
+            if establishment.latitud == 0 and establishment.longitud == 0:
+                continue
+            worksheet.write(row_num, 0, establishment.id)
+            worksheet.write(row_num, 1, str(establishment.tipo_establecimiento))
+            worksheet.write(row_num, 2, establishment.nombre)
+            worksheet.write(row_num, 3, establishment.direccion)
+            worksheet.write(row_num, 4, establishment.poblacion)
+            worksheet.write(row_num, 5, establishment.telefonos)
+            worksheet.write(row_num, 6, establishment.codigo_postal)
+            worksheet.write(row_num, 7, establishment.latitud)
+            worksheet.write(row_num, 8, establishment.longitud)
+            worksheet.write(row_num, 9, establishment.web)
+            worksheet.write(row_num, 10, establishment.email)
+
+        # Close the XLSX file
+        workbook.close()
+
+        logger.info(f'XLSX data (re)generated and stored in {outputfilename} successfully.')
+
+        # Now, we prepare the download...
+        with open(outputfilename, 'rb') as f:
+            response = HttpResponse(f.read(),
+                                    content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+            response['Content-Disposition'] = f'attachment; filename="npedata_{current_date}.xlsx"'
+            return response
+    # Temporary files and folders are automatically cleaned up
+
+

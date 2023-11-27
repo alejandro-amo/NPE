@@ -1,0 +1,103 @@
+{% extends "layouts/base.html" %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+
+{% block title %} User Profile {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+<div class="content">
+    {% if messages %}
+    <div class="row">
+        <div class="col-md-12">
+            {% for message in messages %}
+            <div class="alert alert-dismissible fade show text-darker {% if message.tags %}{{ message.tags }}{% endif %}" role="alert">
+                {{ message }}
+                <button type="button" style="margin-top:0" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true" class="text-darker">&times;</span>
+                </button>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card bg-white text-darker">
+                <div class="card-body">
+                    <h3 class="title" style="margin-bottom:0 !important;">Exportació de la base de dades sencera</h3>
+                    <br/>
+                    Aquesta funcionalitat de l'administrador de dades serveix per exportar tots els establiments actius i amb informació correcta de la base de dades.<br/>
+                    Pot ser útil per fer anàlisi de la informació o per migrar-la cap a un altre sistema.<br/>
+                    <br/>
+                    <span class="alert alert-danger"><b>IMPORTANT:</b> Aquesta exportació conté emails. Alguns d'aquests emails són personals i no es poden compartir o difondre.</span>
+                    <br/>
+                    <br/>
+                    Per a construir mapes públics, compartir amb gent de fora, etc. hi ha altres exportacions de dades que no tenen dades sensibles:<br/>
+                    <ul>
+                        <li>En format CSV: <a href="https://admin.nopucesperar.org/npedata.csv">https://admin.nopucesperar.org/npedata.csv</a></li>
+                    <li>En format GEOJSON: <a href="https://admin.nopucesperar.org/npedata.geojson">https://admin.nopucesperar.org/npedata.geojson</a></li>
+                    </ul>
+                    <br/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="title" style="margin-bottom:0 !important;">Informació de les columnes al fitxer d'exportació</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12 col-md-10 offset-md-1">
+                            <ul>
+                            <li><span style="font-size: small"><strong>ID:</strong> identificador intern a la base de dades</span></li>
+                            <li><span style="font-size: small"><strong>Tipus:</strong> tipus d'establiment (General, Ajuntaments, Hospitals i centres de salut)</span></li>
+                            <li><span style="font-size: small"><strong>Nom:</strong> Nom de l'establiment</span></li>
+                            <li><span style="font-size: small"><strong>Direcció:</strong> Adreça de l'establiment</span></li>
+                            <li><span style="font-size: small"><strong>Municipi:</strong> Municipi de l'establiment (s'apunta el municipi i no la població perquè el municipi permet saber quin ajuntament governa la zona)</span></li>
+                            <li><span style="font-size: small"><strong>Telèfons:</strong> Telèfon(s) de l'establiment</span></li>
+                            <li><span style="font-size: small"><strong>Codi postal:</strong> Codi postal de l'establiment</span></li>
+                            <li><span style="font-size: small"><strong>Latitud:</strong> Primera coordenada GPS</span></li>
+                            <li><span style="font-size: small"><strong>Longitud:</strong> Segona coordenada GPS</span></li>
+                            <li><span style="font-size: small"><strong>Web:</strong> Web de l'establiment, si està documentada</span></li>
+                            <li><span style="font-size: small"><strong>Email:</strong> email de la persona de contacte de l'establiment (*PRIVAT, NO DIFONDRE*)</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="title d-flex justify-content-center" style="margin-bottom:0 !important;">Descarregar tota la base de dades de NPE!</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12 col-md-10 offset-md-1">
+                            <form method="POST" action="/establiments/exportar/">
+                                {% csrf_token %}
+                                {{ form|crispy }}
+                                <div class="d-flex justify-content-center">
+                                    <input type="hidden" name="accio" value="exportar-xlsx">
+                                    <button type="submit" class="btn btn-primary" style="margin-right: 4em">Descarregar totes les dades (a un fitxer Excel)</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
