@@ -2,6 +2,7 @@
 /db.sqlite3
 fuzzy_matching.txt
 /npedata.geojson
+/npedata-private.csv
 /core/.env
 .env
 /admin_api/data/*.xlsx
