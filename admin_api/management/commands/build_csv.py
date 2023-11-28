@@ -24,7 +24,7 @@ class Command(BaseCommand):
         outputfilename = os.path.join(settings.CORE_DIR, 'admin_api', 'data', 'npedata.csv')
 
         with open(outputfilename, 'w', newline='', encoding='utf-8') as csvfile:
-            fieldnames = ['id', 'tipus', 'nom', 'direccio', 'municipi', 'telefons', 'codipostal', 'latitud', 'longitud', 'web']
+            fieldnames = ['id', 'tipus', 'nom', 'direccio', 'municipi', 'telefons', 'codipostal', 'latitud', 'longitud', 'web', 'approved']
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames, quotechar='"', quoting=csv.QUOTE_NONNUMERIC)
 
             writer.writeheader()
@@ -41,7 +41,8 @@ class Command(BaseCommand):
                     'codipostal': establishment.codigo_postal,
                     'latitud': establishment.latitud,
                     'longitud': establishment.longitud,
-                    'web': establishment.web
+                    'web': establishment.web,
+                    'approved': 1
                 })
 
         logger.info(f'CSV data (re)generated and stored in {outputfilename} successfully.')
